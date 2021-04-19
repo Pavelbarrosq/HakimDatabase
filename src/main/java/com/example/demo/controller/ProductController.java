@@ -29,6 +29,30 @@ public class ProductController {
         return productRepo.findAll();
     }
 
+    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
+    public Product getProduct(@PathVariable int id) {
+        for (Product p : productRepo.findAll()) {
+            if (p.getId() == id) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE)
+    public String deleteProduct(@PathVariable int id) {
+        for (Product p : productRepo.findAll()) {
+            if (p.getId() == id) {
+                productRepo.delete(p);
+
+                return "Product removed.";
+            }
+        }
+
+        return "Product not found";
+    }
+
+
 }
 
 
