@@ -3,19 +3,15 @@ package com.example.demo.controller;
 import com.example.demo.model.Product;
 import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/product")
 public class ProductController {
 
     @Autowired
     private ProductRepository productRepo;
 
-    @GetMapping(path = "/add")
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
     public String addProduct(@RequestParam String title, String description, int price, String imageURL, int quantity){
         Product p = new Product();
         p.setTitle(title);
@@ -28,7 +24,7 @@ public class ProductController {
         return "Product was added!";
     }
 
-    @GetMapping(path = "/all")
+    @RequestMapping(value = "/product", method = RequestMethod.GET)
     public Iterable<Product> getAll() {
         return productRepo.findAll();
     }
